@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Animal Factory - Mix & Match Pets!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #DCC7DB 0%, #FBB33C 50%, #F37536 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: #FBF8EC;
+            padding: 25px 45px;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+            text-align: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            color: #F37536;
+            font-size: 2.8em;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #9E9856;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 35px;
+            padding: 35px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+            max-width: 1200px;
+            width: 100%;
+            min-height: 500px;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .menu-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .menu-button {
+            background: linear-gradient(135deg, #FBB33C 0%, #F37536 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 40px;
+            color: white;
+            font-size: 1.6em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(243, 117, 54, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(243, 117, 54, 0.4);
+        }
+
+        .menu-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .step-indicator {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #9E9856;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .instruction {
+            text-align: center;
+            color: #F37536;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .animal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .animal-card {
+            background: white;
+            border: 4px solid #DCC7DB;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .animal-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: #FBB33C;
+        }
+
+        .animal-card.selected {
+            background: linear-gradient(135deg, #FBB33C 0%, #F37536 100%);
+            color: white;
+            border-color: #F37536;
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(243, 117, 54, 0.4);
+        }
+
+        .animal-emoji {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+        }
+
+        .animal-name {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .mixing-display {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .mixing-formula {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 40px 0;
+            font-size: 2em;
+        }
+
+        .mix-animal {
+            font-size: 3em;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .plus-sign, .equals-sign {
+            color: #9E9856;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FBB33C 0%, #F37536 100%);
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(243, 117, 54, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(243, 117, 54, 0.4);
+        }
+
+        .btn-secondary {
+            background: #9E9856;
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(158, 152, 86, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(158, 152, 86, 0.4);
+        }
+
+        .name-input {
+            padding: 15px 25px;
+            font-size: 1.3em;
+            border: 3px solid #DCC7DB;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            display: block;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .name-input:focus {
+            outline: none;
+            border-color: #FBB33C;
+            box-shadow: 0 0 20px rgba(251, 179, 60, 0.3);
+        }
+
+        .pet-display {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .hybrid-pet-image {
+            width: 350px;
+            height: 350px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 30px;
+            object-fit: contain;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .pet-animated {
+            animation: petBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes petBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(-5deg); }
+            75% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .pet-name {
+            font-size: 2em;
+            color: #F37536;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .pet-traits {
+            background: #FBF8EC;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .trait {
+            display: inline-block;
+            background: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 15px;
+            color: #9E9856;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .interaction-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .interact-btn {
+            background: white;
+            border: 3px solid #DCC7DB;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            color: #9E9856;
+        }
+
+        .interact-btn:hover {
+            background: #DCC7DB;
+            transform: scale(1.1);
+        }
+
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .collection-pet {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid #DCC7DB;
+        }
+
+        .collection-pet:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: #FBB33C;
+        }
+
+        .collection-pet-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            object-fit: contain;
+            background: #FBF8EC;
+            padding: 10px;
+        }
+
+        .collection-pet-name {
+            font-weight: bold;
+            color: #F37536;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .collection-pet-type {
+            color: #9E9856;
+            font-size: 0.9em;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #9E9856;
+        }
+
+        .empty-state-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            font-size: 1.3em;
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+            100% { opacity: 0; transform: scale(0) rotate(360deg); }
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #FBB33C;
+            font-size: 2em;
+            animation: sparkle 1s ease-in-out;
+            pointer-events: none;
+        }
+
+        .pet-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #9E9856;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            color: #F37536;
+        }
+
+        .loading-spinner {
+            border: 5px solid #DCC7DB;
+            border-top: 5px solid #F37536;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            text-align: center;
+            color: #9E9856;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .animal-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 15px;
+            }
+            .animal-emoji { font-size: 2.5em; }
+            .hybrid-pet-image { 
+                width: 280px; 
+                height: 280px; 
+            }
+            .main-container { padding: 20px; }
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            border: 3px solid #DCC7DB;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9E9856;
+        }
+
+        .back-button:hover {
+            background: #DCC7DB;
+            transform: scale(1.1);
+        }
+
+        .pet-counter {
+            text-align: center;
+            color: #9E9856;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        @keyframes jump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-50px); }
+        }
+        
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-50px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏭 Magic Animal Factory 🏭</h1>
+        <p class="subtitle">Blend two animals to create your perfect stuffed friend!</p>
+    </div>
+
+    <div class="main-container">
+        <!-- Home Screen -->
+        <div id="homeScreen" class="screen active">
+            <div class="menu-buttons">
+                <button class="menu-button" id="createNewBtn">
+                    <div class="menu-icon">➕</div>
+                    <div>Create New Pet</div>
+                    <div style="font-size: 0.6em; margin-top: 10px;">Mix and match animals!</div>
+                </button>
+                <button class="menu-button" id="collectionBtn">
+                    <div class="menu-icon">📚</div>
+                    <div>My Collection</div>
+                    <div style="font-size: 0.6em; margin-top: 10px;">See all your pets!</div>
+                </button>
+            </div>
+            <div class="pet-counter">You have <span id="petCount">0</span> magical pets!</div>
+        </div>
+
+        <!-- Animal Selection Screen 1 -->
+        <div id="selectScreen1" class="screen">
+            <button class="back-button" id="homeBtn1">🏠</button>
+            <div class="step-indicator">Step 1 of 3</div>
+            <div class="instruction">Choose your first animal!</div>
+            <div class="animal-grid" id="animalGrid1"></div>
+        </div>
+
+        <!-- Animal Selection Screen 2 -->
+        <div id="selectScreen2" class="screen">
+            <button class="back-button" id="backBtn2">⬅</button>
+            <div class="step-indicator">Step 2 of 3</div>
+            <div class="instruction">Now pick a second animal to mix with!</div>
+            <div class="animal-grid" id="animalGrid2"></div>
+        </div>
+
+        <!-- Mixing Preview Screen -->
+        <div id="mixingScreen" class="screen">
+            <button class="back-button" id="backBtn3">⬅</button>
+            <div class="step-indicator">Step 3 of 3</div>
+            <div class="instruction">Ready to create your hybrid pet!</div>
+            <div class="mixing-display">
+                <div class="mixing-formula">
+                    <div class="mix-animal" id="animal1Display"></div>
+                    <div class="plus-sign">+</div>
+                    <div class="mix-animal" id="animal2Display"></div>
+                    <div class="equals-sign">=</div>
+                    <div class="mix-animal">✨</div>
+                </div>
+                <p style="color: #9E9856; font-size: 1.2em; margin: 20px 0;">
+                    <span id="mixPreview"></span>
+                </p>
+                <div class="action-buttons">
+                    <button class="btn-primary" id="createBtn">Create Pet! ✨</button>
+                    <button class="btn-secondary" id="startOverBtn">Start Over</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Name Your Pet Screen -->
+        <div id="nameScreen" class="screen">
+            <div class="instruction">Name Your New Friend!</div>
+            <div class="pet-display">
+                <div id="newPetDisplay"></div>
+                <div id="loadingIndicator" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Creating your magical pet...</div>
+                </div>
+                <input type="text" class="name-input" id="petNameInput" placeholder="Enter a name..." maxlength="20">
+                <div class="action-buttons">
+                    <button class="btn-primary" id="saveBtn">Bring to Life! ✨</button>
+                    <button class="btn-secondary" id="backNameBtn">Back</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pet Interaction Screen -->
+        <div id="petScreen" class="screen">
+            <button class="back-button" id="homeBtn2">🏠</button>
+            <div class="pet-display">
+                <div id="petDisplayContainer"></div>
+                <div class="pet-name" id="petDisplayName"></div>
+                <div class="pet-stats">
+                    <div class="stat">
+                        <div class="stat-label">Happiness</div>
+                        <div class="stat-value" id="happinessStat">❤️❤️❤️</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Hunger</div>
+                        <div class="stat-value" id="hungerStat">🍎🍎🍎</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Energy</div>
+                        <div class="stat-value" id="energyStat">⚡⚡⚡</div>
+                    </div>
+                </div>
+                <div class="interaction-buttons">
+                    <button class="interact-btn" id="feedBtn">🍎 Feed</button>
+                    <button class="interact-btn" id="petBtn">🤚 Pet</button>
+                    <button class="interact-btn" id="playBtn">🎾 Play</button>
+                    <button class="interact-btn" id="jumpBtn">🦘 Jump</button>
+                    <button class="interact-btn" id="spinBtn">🌀 Spin</button>
+                    <button class="interact-btn" id="sleepBtn">😴 Sleep</button>
+                </div>
+                <div class="pet-traits" id="petTraits"></div>
+                <div class="action-buttons">
+                    <button class="btn-primary" id="createAnotherBtn">Create Another Pet</button>
+                    <button class="btn-secondary" id="viewCollectionBtn">View Collection</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collection Screen -->
+        <div id="collectionScreen" class="screen">
+            <button class="back-button" id="homeBtn3">🏠</button>
+            <div class="instruction">My Pet Collection</div>
+            <div id="collectionGrid" class="collection-grid"></div>
+            <div class="action-buttons" style="margin-top: 30px;">
+                <button class="btn-primary" id="createFromCollectionBtn">Create New Pet</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // ============================================
+            // IMAGE LIBRARY CONFIGURATION
+            // ============================================
+            // Replace these placeholder URLs with your actual stuffed animal images
+            const hybridImageLibrary = {
+                'Cat-Dog': 'https://via.placeholder.com/400x400/FFB6C1/000000?text=Cat-Dog',
+                'Dog-Cat': 'https://via.placeholder.com/400x400/FFB6C1/000000?text=Dog-Cat',
+                'Cat-Fish': 'https://via.placeholder.com/400x400/87CEEB/000000?text=Cat-Fish',
+                'Fish-Cat': 'https://via.placeholder.com/400x400/87CEEB/000000?text=Cat-Fish',
+                'Lion-Butterfly': 'https://via.placeholder.com/400x400/FFD700/000000?text=Lion-Butterfly',
+                'Butterfly-Lion': 'https://via.placeholder.com/400x400/FFD700/000000?text=Lion-Butterfly',
+                'Dog-Fish': 'https://via.placeholder.com/400x400/98FB98/000000?text=Dog-Fish',
+                'Fish-Dog': 'https://via.placeholder.com/400x400/98FB98/000000?text=Dog-Fish',
+                'Cat-Octopus': 'https://via.placeholder.com/400x400/DDA0DD/000000?text=Cat-Octopus',
+                'Octopus-Cat': 'https://via.placeholder.com/400x400/DDA0DD/000000?text=Cat-Octopus',
+                'Lion-Bear': 'https://via.placeholder.com/400x400/F4A460/000000?text=Lion-Bear',
+                'Bear-Lion': 'https://via.placeholder.com/400x400/F4A460/000000?text=Lion-Bear',
+                'default': 'https://via.placeholder.com/400x400/FBB33C/FFFFFF?text=Magical+Hybrid'
+            };
+
+            // Animal Data
+            const animals = [
+                { name: 'Cat', emoji: '🐱', traits: ['Playful', 'Curious', 'Soft'] },
+                { name: 'Dog', emoji: '🐶', traits: ['Loyal', 'Friendly', 'Energetic'] },
+                { name: 'Lion', emoji: '🦁', traits: ['Brave', 'Strong', 'Majestic'] },
+                { name: 'Elephant', emoji: '🐘', traits: ['Wise', 'Gentle', 'Big'] },
+                { name: 'Penguin', emoji: '🐧', traits: ['Cool', 'Waddles', 'Social'] },
+                { name: 'Owl', emoji: '🦉', traits: ['Wise', 'Nocturnal', 'Silent'] },
+                { name: 'Octopus', emoji: '🐙', traits: ['Smart', 'Flexible', 'Colorful'] },
+                { name: 'Butterfly', emoji: '🦋', traits: ['Beautiful', 'Delicate', 'Transforms'] },
+                { name: 'Fish', emoji: '🐠', traits: ['Swimmer', 'Peaceful', 'Colorful'] },
+                { name: 'Monkey', emoji: '🐵', traits: ['Playful', 'Smart', 'Agile'] },
+                { name: 'Bear', emoji: '🐻', traits: ['Cuddly', 'Strong', 'Protective'] },
+                { name: 'Rabbit', emoji: '🐰', traits: ['Fast', 'Soft', 'Hoppy'] }
+            ];
+
+            // Game State
+            let selectedAnimal1 = null;
+            let selectedAnimal2 = null;
+            let currentPet = null;
+            let petCollection = JSON.parse(localStorage.getItem('petCollection')) || [];
+
+            // Define all functions first
+            function showScreen(screenId) {
+                document.querySelectorAll('.screen').forEach(screen => {
+                    screen.classList.remove('active');
+                });
+                document.getElementById(screenId).classList.add('active');
+            }
+
+            function updatePetCount() {
+                document.getElementById('petCount').textContent = petCollection.length;
+            }
+
+            function createAnimalCard(animal, gridNumber) {
+                const card = document.createElement('div');
+                card.className = 'animal-card';
+                card.innerHTML = `
+                    <div class="animal-emoji">${animal.emoji}</div>
+                    <div class="animal-name">${animal.name}</div>
+                `;
+                card.addEventListener('click', () => selectAnimal(animal, gridNumber, card));
+                return card;
+            }
+
+            function selectAnimal(animal, gridNumber, cardElement) {
+                if (gridNumber === 1) {
+                    selectedAnimal1 = animal;
+                    document.querySelectorAll('#animalGrid1 .animal-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    cardElement.classList.add('selected');
+                    setTimeout(() => showScreen('selectScreen2'), 500);
+                } else {
+                    selectedAnimal2 = animal;
+                    document.querySelectorAll('#animalGrid2 .animal-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    cardElement.classList.add('selected');
+                    setTimeout(() => showMixingPreview(), 500);
+                }
+            }
+
+            function showMixingPreview() {
+                document.getElementById('animal1Display').textContent = selectedAnimal1.emoji;
+                document.getElementById('animal2Display').textContent = selectedAnimal2.emoji;
+                document.getElementById('mixPreview').textContent = 
+                    `${selectedAnimal1.name} + ${selectedAnimal2.name} = Magic!`;
+                showScreen('mixingScreen');
+            }
+
+            function createSparkles() {
+                const container = document.getElementById('mixingScreen');
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        const sparkle = document.createElement('div');
+                        sparkle.className = 'sparkle';
+                        sparkle.textContent = '✨';
+                        sparkle.style.left = Math.random() * 100 + '%';
+                        sparkle.style.top = Math.random() * 100 + '%';
+                        container.appendChild(sparkle);
+                        setTimeout(() => sparkle.remove(), 1000);
+                    }, i * 100);
+                }
+            }
+
+            function createHybrid() {
+                createSparkles();
+                
+                document.getElementById('loadingIndicator').style.display = 'block';
+                document.getElementById('newPetDisplay').style.display = 'none';
+                
+                setTimeout(() => {
+                    const hybridKey = `${selectedAnimal1.name}-${selectedAnimal2.name}`;
+                    let hybridImage = hybridImageLibrary[hybridKey] || hybridImageLibrary['default'];
+                    
+                    currentPet = {
+                        imageUrl: hybridImage,
+                        name: '',
+                        type: `${selectedAnimal1.name}-${selectedAnimal2.name}`,
+                        parent1: selectedAnimal1,
+                        parent2: selectedAnimal2,
+                        traits: [...new Set([...selectedAnimal1.traits, ...selectedAnimal2.traits])],
+                        happiness: 3,
+                        hunger: 3,
+                        energy: 3,
+                        id: Date.now()
+                    };
+                    
+                    document.getElementById('loadingIndicator').style.display = 'none';
+                    document.getElementById('newPetDisplay').style.display = 'block';
+                    document.getElementById('newPetDisplay').innerHTML = 
+                        `<img src="${hybridImage}" alt="Hybrid Pet" class="hybrid-pet-image pet-animated">`;
+                    
+                    document.getElementById('petNameInput').value = `${selectedAnimal1.name}${selectedAnimal2.name}`;
+                    showScreen('nameScreen');
+                }, 1500);

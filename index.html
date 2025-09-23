@@ -952,6 +952,9 @@
                             } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
                                 showVideoModal('videos/lion_uni_eat.mp4', `${currentPet.name} Is Enjoying a Tasty Meal! 🍎`);
                                 return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
+                                showVideoModal('videos/dog_fish_eat.mp4', `${currentPet.name} Is Enjoying a Tasty Meal! 🍎`);
+                                return; // Don't show floating message, video is the main interaction
                             }
                         } else {
                             message = `${currentPet.name} is already full! 😊`;
@@ -969,6 +972,9 @@
                         } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
                             showVideoModal('videos/lion_uni_pet.mp4', `${currentPet.name} Loves Being Petted! ❤️`);
                             return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
+                            showVideoModal('videos/dog_fish_pet.mp4', `${currentPet.name} Loves Being Petted! ❤️`);
+                            return; // Don't show floating message, video is the main interaction
                         }
                         break;
                     case 'play':
@@ -985,6 +991,9 @@
                                 return; // Don't show floating message, video is the main interaction
                             } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
                                 showVideoModal('videos/lion_uni_play.mp4', `Watch ${currentPet.name} Play!`);
+                                return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
+                                showVideoModal('videos/dog_fish_play.mp4', `Watch ${currentPet.name} Play!`);
                                 return; // Don't show floating message, video is the main interaction
                             }
                         } else {
@@ -1004,6 +1013,9 @@
                             } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
                                 showVideoModal('videos/lion_uni_jump.mp4', `${currentPet.name} Is Jumping High! 🦘`);
                                 return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
+                                showVideoModal('videos/dog_fish_jump.mp4', `${currentPet.name} Is Jumping High! 🦘`);
+                                return; // Don't show floating message, video is the main interaction
                             }
                         } else {
                             message = `${currentPet.name} is too tired to jump! 😴`;
@@ -1020,6 +1032,9 @@
                         } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
                             showVideoModal('videos/lion_uni_spin.mp4', `${currentPet.name} Is Spinning Around! 🌀`);
                             return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
+                            showVideoModal('videos/dog_fish_spin.mp4', `${currentPet.name} Is Spinning Around! 🌀`);
+                            return; // Don't show floating message, video is the main interaction
                         }
                         break;
                     case 'sleep':
@@ -1033,6 +1048,9 @@
                             return; // Don't show floating message, video is the main interaction
                         } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
                             showVideoModal('videos/lion_uni_sleep.mp4', `${currentPet.name} Is Taking a Peaceful Nap! 😴`);
+                            return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
+                            showVideoModal('videos/dog_fish_sleep.mp4', `${currentPet.name} Is Taking a Peaceful Nap! 😴`);
                             return; // Don't show floating message, video is the main interaction
                         }
                         break;

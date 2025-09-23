@@ -511,6 +511,66 @@
             0% { opacity: 1; transform: translateY(0); }
             100% { opacity: 0; transform: translateY(-50px); }
         }
+
+        /* Video Modal Styles */
+        .video-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .video-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 90%;
+            max-height: 90%;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .video-modal video {
+            width: 80%;
+            max-width: 480px;
+            border-radius: 15px;
+        }
+
+        .video-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #F37536;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .video-close:hover {
+            background: #FBB33C;
+            transform: scale(1.1);
+        }
+
+        .video-title {
+            text-align: center;
+            color: #F37536;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -637,6 +697,18 @@
             <div class="action-buttons" style="margin-top: 30px;">
                 <button class="btn-primary" id="createFromCollectionBtn">Create New Pet</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="video-modal">
+        <div class="video-modal-content">
+            <button class="video-close" id="closeVideoModal">&times;</button>
+            <div class="video-title" id="videoTitle">Watch Your Pet Play!</div>
+            <video id="petVideo" controls autoplay>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
     </div>
 
@@ -831,6 +903,28 @@
                 document.getElementById('energyStat').textContent = energyDisplay;
             }
 
+            function showVideoModal(videoSrc, title) {
+                const modal = document.getElementById('videoModal');
+                const video = document.getElementById('petVideo');
+                const videoTitle = document.getElementById('videoTitle');
+                
+                video.src = videoSrc;
+                videoTitle.textContent = title;
+                modal.style.display = 'block';
+                
+                // Play video
+                video.play();
+            }
+
+            function closeVideoModal() {
+                const modal = document.getElementById('videoModal');
+                const video = document.getElementById('petVideo');
+                
+                modal.style.display = 'none';
+                video.pause();
+                video.currentTime = 0;
+            }
+
             function interactWithPet(interactionType, petElement) {
                 if (!currentPet) return;
                 
@@ -850,6 +944,12 @@
                             currentPet.happiness = Math.min(3, currentPet.happiness + 1);
                             message = `${currentPet.name} enjoyed the food! 🍎`;
                             animation = 'bounce';
+                            
+                            // Show eat video for specific pets
+                            if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
+                                showVideoModal('videos/catapus_eat.mp4', `${currentPet.name} Is Enjoying a Tasty Meal! 🍎`);
+                                return; // Don't show floating message, video is the main interaction
+                            }
                         } else {
                             message = `${currentPet.name} is already full! 😊`;
                         }
@@ -858,6 +958,12 @@
                         currentPet.happiness = Math.min(3, currentPet.happiness + 1);
                         message = `${currentPet.name} loves being petted! ❤️`;
                         animation = 'petBounce';
+                        
+                        // Show pet video for specific pets
+                        if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
+                            showVideoModal('videos/catapus_pet.mp4', `${currentPet.name} Loves Being Petted! ❤️`);
+                            return; // Don't show floating message, video is the main interaction
+                        }
                         break;
                     case 'play':
                         if (currentPet.energy > 0) {
@@ -866,6 +972,12 @@
                             currentPet.hunger = Math.max(0, currentPet.hunger - 1);
                             message = `${currentPet.name} had fun playing! 🎾`;
                             animation = 'bounce';
+                            
+                            // Show play video for specific pets
+                            if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
+                                showVideoModal('videos/catapus_play.mp4', `Watch ${currentPet.name} Play!`);
+                                return; // Don't show floating message, video is the main interaction
+                            }
                         } else {
                             message = `${currentPet.name} is too tired to play! 😴`;
                         }
@@ -875,6 +987,12 @@
                             currentPet.energy = Math.max(0, currentPet.energy - 1);
                             message = `${currentPet.name} jumped so high! 🦘`;
                             animation = 'jump';
+                            
+                            // Show jump video for specific pets
+                            if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
+                                showVideoModal('videos/catapus_jump.mp4', `${currentPet.name} Is Jumping High! 🦘`);
+                                return; // Don't show floating message, video is the main interaction
+                            }
                         } else {
                             message = `${currentPet.name} is too tired to jump! 😴`;
                         }
@@ -882,11 +1000,23 @@
                     case 'spin':
                         message = `${currentPet.name} spun around! 🌀`;
                         animation = 'spin';
+                        
+                        // Show spin video for specific pets
+                        if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
+                            showVideoModal('videos/catapus_spin.mp4', `${currentPet.name} Is Spinning Around! 🌀`);
+                            return; // Don't show floating message, video is the main interaction
+                        }
                         break;
                     case 'sleep':
                         currentPet.energy = 3;
                         message = `${currentPet.name} had a nice nap! 😴`;
                         animation = 'float';
+                        
+                        // Show sleep video for specific pets
+                        if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
+                            showVideoModal('videos/catapus_sleep.mp4', `${currentPet.name} Is Taking a Peaceful Nap! 😴`);
+                            return; // Don't show floating message, video is the main interaction
+                        }
                         break;
                 }
                 
@@ -1065,6 +1195,16 @@
                 }
             `;
             document.head.appendChild(style);
+
+            // Video modal event listeners
+            document.getElementById('closeVideoModal').addEventListener('click', closeVideoModal);
+            
+            // Close modal when clicking outside of it
+            document.getElementById('videoModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeVideoModal();
+                }
+            });
         });
     </script>
 </body>

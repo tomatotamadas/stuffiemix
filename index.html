@@ -729,8 +729,8 @@
                 'Fish-Dog': 'images/dog-fish.png',
                 'Penguin-Elephant': 'images/flamingo-hedgehog.png',
                 'Elephant-Penguin': 'images/flamingo-hedgehog.png',
-                'Lion-Butterfly': 'images/lion-unicorn.png',
-                'Butterfly-Lion': 'images/lion-unicorn.png',
+                'Lion-Unicorn': 'images/lion-unicorn.png',
+                'Unicorn-Lion': 'images/lion-unicorn.png',
                 'Owl-Penguin': 'images/owl-penguin.png',
                 'Penguin-Owl': 'images/owl-penguin.png',
                 'Owl-Rabbit': 'images/owl-rabbit.png',
@@ -752,7 +752,7 @@
                 { name: 'Butterfly', emoji: '🦋', traits: ['Beautiful', 'Delicate', 'Transforms'] },
                 { name: 'Fish', emoji: '🐠', traits: ['Swimmer', 'Peaceful', 'Colorful'] },
                 { name: 'Monkey', emoji: '🐵', traits: ['Playful', 'Smart', 'Agile'] },
-                { name: 'Bear', emoji: '🐻', traits: ['Cuddly', 'Strong', 'Protective'] },
+                { name: 'Unicorn', emoji: '🦄', traits: ['Magical', 'Pure', 'Elegant'] },
                 { name: 'Rabbit', emoji: '🐰', traits: ['Fast', 'Soft', 'Hoppy'] }
             ];
 
@@ -949,6 +949,9 @@
                             if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
                                 showVideoModal('videos/catapus_eat.mp4', `${currentPet.name} Is Enjoying a Tasty Meal! 🍎`);
                                 return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
+                                showVideoModal('videos/lion_uni_eat.mp4', `${currentPet.name} Is Enjoying a Tasty Meal! 🍎`);
+                                return; // Don't show floating message, video is the main interaction
                             }
                         } else {
                             message = `${currentPet.name} is already full! 😊`;
@@ -963,6 +966,9 @@
                         if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
                             showVideoModal('videos/catapus_pet.mp4', `${currentPet.name} Loves Being Petted! ❤️`);
                             return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
+                            showVideoModal('videos/lion_uni_pet.mp4', `${currentPet.name} Loves Being Petted! ❤️`);
+                            return; // Don't show floating message, video is the main interaction
                         }
                         break;
                     case 'play':
@@ -976,6 +982,9 @@
                             // Show play video for specific pets
                             if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
                                 showVideoModal('videos/catapus_play.mp4', `Watch ${currentPet.name} Play!`);
+                                return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
+                                showVideoModal('videos/lion_uni_play.mp4', `Watch ${currentPet.name} Play!`);
                                 return; // Don't show floating message, video is the main interaction
                             }
                         } else {
@@ -992,6 +1001,9 @@
                             if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
                                 showVideoModal('videos/catapus_jump.mp4', `${currentPet.name} Is Jumping High! 🦘`);
                                 return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
+                                showVideoModal('videos/lion_uni_jump.mp4', `${currentPet.name} Is Jumping High! 🦘`);
+                                return; // Don't show floating message, video is the main interaction
                             }
                         } else {
                             message = `${currentPet.name} is too tired to jump! 😴`;
@@ -1005,6 +1017,9 @@
                         if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
                             showVideoModal('videos/catapus_spin.mp4', `${currentPet.name} Is Spinning Around! 🌀`);
                             return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
+                            showVideoModal('videos/lion_uni_spin.mp4', `${currentPet.name} Is Spinning Around! 🌀`);
+                            return; // Don't show floating message, video is the main interaction
                         }
                         break;
                     case 'sleep':
@@ -1015,6 +1030,9 @@
                         // Show sleep video for specific pets
                         if (currentPet.type === 'Cat-Octopus' || currentPet.type === 'Octopus-Cat') {
                             showVideoModal('videos/catapus_sleep.mp4', `${currentPet.name} Is Taking a Peaceful Nap! 😴`);
+                            return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Lion-Unicorn' || currentPet.type === 'Unicorn-Lion') {
+                            showVideoModal('videos/lion_uni_sleep.mp4', `${currentPet.name} Is Taking a Peaceful Nap! 😴`);
                             return; // Don't show floating message, video is the main interaction
                         }
                         break;

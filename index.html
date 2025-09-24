@@ -727,8 +727,8 @@
                 'Octopus-Cat': 'images/cat-octopus.png',
                 'Dog-Fish': 'images/dog-fish.png',
                 'Fish-Dog': 'images/dog-fish.png',
-                'Penguin-Elephant': 'images/flamingo-hedgehog.png',
-                'Elephant-Penguin': 'images/flamingo-hedgehog.png',
+                'Flamingo-Hedgehog': 'images/flamingo-hedgehog.png',
+                'Hedgehog-Flamingo': 'images/flamingo-hedgehog.png',
                 'Lion-Unicorn': 'images/lion-unicorn.png',
                 'Unicorn-Lion': 'images/lion-unicorn.png',
                 'Owl-Penguin': 'images/owl-penguin.png',
@@ -745,8 +745,8 @@
                 { name: 'Cat', emoji: '🐱', traits: ['Playful', 'Curious', 'Soft'] },
                 { name: 'Dog', emoji: '🐶', traits: ['Loyal', 'Friendly', 'Energetic'] },
                 { name: 'Lion', emoji: '🦁', traits: ['Brave', 'Strong', 'Majestic'] },
-                { name: 'Elephant', emoji: '🐘', traits: ['Wise', 'Gentle', 'Big'] },
-                { name: 'Penguin', emoji: '🐧', traits: ['Cool', 'Waddles', 'Social'] },
+                { name: 'Flamingo', emoji: '🦩', traits: ['Elegant', 'Pink', 'Graceful'] },
+                { name: 'Hedgehog', emoji: '🦔', traits: ['Spiky', 'Small', 'Cute'] },
                 { name: 'Owl', emoji: '🦉', traits: ['Wise', 'Nocturnal', 'Silent'] },
                 { name: 'Octopus', emoji: '🐙', traits: ['Smart', 'Flexible', 'Colorful'] },
                 { name: 'Butterfly', emoji: '🦋', traits: ['Beautiful', 'Delicate', 'Transforms'] },
@@ -955,6 +955,9 @@
                             } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
                                 showVideoModal('videos/dog_fish_eat.mp4', `${currentPet.name} Is Enjoying a Tasty Meal! 🍎`);
                                 return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Flamingo-Hedgehog' || currentPet.type === 'Hedgehog-Flamingo') {
+                                showVideoModal('videos/flamingo_hedge_eat.mp4', `${currentPet.name} Is Enjoying a Tasty Meal! 🍎`);
+                                return; // Don't show floating message, video is the main interaction
                             }
                         } else {
                             message = `${currentPet.name} is already full! 😊`;
@@ -975,6 +978,9 @@
                         } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
                             showVideoModal('videos/dog_fish_pet.mp4', `${currentPet.name} Loves Being Petted! ❤️`);
                             return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Flamingo-Hedgehog' || currentPet.type === 'Hedgehog-Flamingo') {
+                            showVideoModal('videos/flamingo_hedge_pet.mp4', `${currentPet.name} Loves Being Petted! ❤️`);
+                            return; // Don't show floating message, video is the main interaction
                         }
                         break;
                     case 'play':
@@ -994,6 +1000,9 @@
                                 return; // Don't show floating message, video is the main interaction
                             } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
                                 showVideoModal('videos/dog_fish_play.mp4', `Watch ${currentPet.name} Play!`);
+                                return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Flamingo-Hedgehog' || currentPet.type === 'Hedgehog-Flamingo') {
+                                showVideoModal('videos/flamingo_hedge_play.mp4', `Watch ${currentPet.name} Play!`);
                                 return; // Don't show floating message, video is the main interaction
                             }
                         } else {
@@ -1016,6 +1025,9 @@
                             } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
                                 showVideoModal('videos/dog_fish_jump.mp4', `${currentPet.name} Is Jumping High! 🦘`);
                                 return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Flamingo-Hedgehog' || currentPet.type === 'Hedgehog-Flamingo') {
+                                showVideoModal('videos/flamingo_hedge_jump.mp4', `${currentPet.name} Is Jumping High! 🦘`);
+                                return; // Don't show floating message, video is the main interaction
                             }
                         } else {
                             message = `${currentPet.name} is too tired to jump! 😴`;
@@ -1035,6 +1047,9 @@
                         } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
                             showVideoModal('videos/dog_fish_spin.mp4', `${currentPet.name} Is Spinning Around! 🌀`);
                             return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Flamingo-Hedgehog' || currentPet.type === 'Hedgehog-Flamingo') {
+                            showVideoModal('videos/flamingo_hedge_spin.mp4', `${currentPet.name} Is Spinning Around! 🌀`);
+                            return; // Don't show floating message, video is the main interaction
                         }
                         break;
                     case 'sleep':
@@ -1051,6 +1066,9 @@
                             return; // Don't show floating message, video is the main interaction
                         } else if (currentPet.type === 'Dog-Fish' || currentPet.type === 'Fish-Dog') {
                             showVideoModal('videos/dog_fish_sleep.mp4', `${currentPet.name} Is Taking a Peaceful Nap! 😴`);
+                            return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Flamingo-Hedgehog' || currentPet.type === 'Hedgehog-Flamingo') {
+                            showVideoModal('videos/flamingo_hedge_sleep.mp4', `${currentPet.name} Is Taking a Peaceful Nap! 😴`);
                             return; // Don't show floating message, video is the main interaction
                         }
                         break;

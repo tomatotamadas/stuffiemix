@@ -769,6 +769,8 @@
                 'Rabbit-Owl': 'images/owl-rabbit.png',
                 'Monkey-Penguin': 'images/monkey_penguin.png',
                 'Penguin-Monkey': 'images/monkey_penguin.png',
+                'Flamingo-Unicorn': 'images/flamingo_unicorn.png',
+                'Unicorn-Flamingo': 'images/flamingo_unicorn.png',
                 'default': 'images/cat-octopus.png'
             };
 
@@ -996,6 +998,9 @@
                             } else if (currentPet.type === 'Monkey-Penguin' || currentPet.type === 'Penguin-Monkey') {
                                 showVideoModal('videos/monkey_penguin_eat.mp4', `${currentPet.name} Is Enjoying a Tasty Meal! 🍎`);
                                 return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Flamingo-Unicorn' || currentPet.type === 'Unicorn-Flamingo') {
+                                showVideoModal('videos/flamingo_unicorn_eat.mp4', `${currentPet.name} Is Enjoying a Tasty Meal! 🍎`);
+                                return; // Don't show floating message, video is the main interaction
                             }
                         } else {
                             message = `${currentPet.name} is already full! 😊`;
@@ -1025,6 +1030,9 @@
                         } else if (currentPet.type === 'Monkey-Penguin' || currentPet.type === 'Penguin-Monkey') {
                             showVideoModal('videos/monkey_penguin_pet.mp4', `${currentPet.name} Loves Being Petted! ❤️`);
                             return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Flamingo-Unicorn' || currentPet.type === 'Unicorn-Flamingo') {
+                            showVideoModal('videos/flamingo_unicorn_pet.mp4', `${currentPet.name} Loves Being Petted! ❤️`);
+                            return; // Don't show floating message, video is the main interaction
                         }
                         break;
                     case 'play':
@@ -1053,6 +1061,9 @@
                                 return; // Don't show floating message, video is the main interaction
                             } else if (currentPet.type === 'Monkey-Penguin' || currentPet.type === 'Penguin-Monkey') {
                                 showVideoModal('videos/monkey_penguin_play.mp4', `Watch ${currentPet.name} Play!`);
+                                return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Flamingo-Unicorn' || currentPet.type === 'Unicorn-Flamingo') {
+                                showVideoModal('videos/flamingo_unicorn_play.mp4', `Watch ${currentPet.name} Play!`);
                                 return; // Don't show floating message, video is the main interaction
                             }
                         } else {
@@ -1084,6 +1095,9 @@
                             } else if (currentPet.type === 'Monkey-Penguin' || currentPet.type === 'Penguin-Monkey') {
                                 showVideoModal('videos/monkey_penguin_jump.mp4', `${currentPet.name} Is Jumping High! 🦘`);
                                 return; // Don't show floating message, video is the main interaction
+                            } else if (currentPet.type === 'Flamingo-Unicorn' || currentPet.type === 'Unicorn-Flamingo') {
+                                showVideoModal('videos/flamingo_unicorn_jump.mp4', `${currentPet.name} Is Jumping High! 🦘`);
+                                return; // Don't show floating message, video is the main interaction
                             }
                         } else {
                             message = `${currentPet.name} is too tired to jump! 😴`;
@@ -1112,6 +1126,9 @@
                         } else if (currentPet.type === 'Monkey-Penguin' || currentPet.type === 'Penguin-Monkey') {
                             showVideoModal('videos/monkey_penguin_spin.mp4', `${currentPet.name} Is Spinning Around! 🌀`);
                             return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Flamingo-Unicorn' || currentPet.type === 'Unicorn-Flamingo') {
+                            showVideoModal('videos/flamingo_unicorn_spin.mp4', `${currentPet.name} Is Spinning Around! 🌀`);
+                            return; // Don't show floating message, video is the main interaction
                         }
                         break;
                     case 'sleep':
@@ -1137,6 +1154,9 @@
                             return; // Don't show floating message, video is the main interaction
                         } else if (currentPet.type === 'Monkey-Penguin' || currentPet.type === 'Penguin-Monkey') {
                             showVideoModal('videos/monkey_penguin_sleep.mp4', `${currentPet.name} Is Taking a Peaceful Nap! 😴`);
+                            return; // Don't show floating message, video is the main interaction
+                        } else if (currentPet.type === 'Flamingo-Unicorn' || currentPet.type === 'Unicorn-Flamingo') {
+                            showVideoModal('videos/flamingo_unicorn_sleep.mp4', `${currentPet.name} Is Taking a Peaceful Nap! 😴`);
                             return; // Don't show floating message, video is the main interaction
                         }
                         break;
